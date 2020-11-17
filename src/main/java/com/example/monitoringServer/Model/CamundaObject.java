@@ -4,23 +4,47 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize
 public class CamundaObject implements Serializable{
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long camundaObject_id;
+	private long startzeit;
+	private long endzeit;
 	private long durchlaufzeit;
-	private long finaleBearbeitungszeit;
-	private long endeBearbeitungszeit;
 	
 	public CamundaObject() {
 		
 	}
 	
-	public CamundaObject(long endeBearbeitungszeit, long finaleBearbeitungszeit, long durchlaufzeit) {
+	public CamundaObject(long startzeit, long endzeit, long durchlaufzeit) {
 		this.durchlaufzeit = durchlaufzeit;
-		this.finaleBearbeitungszeit = finaleBearbeitungszeit;
-		this.endeBearbeitungszeit = endeBearbeitungszeit;
+		this.endzeit = endzeit;
+		this.endzeit = startzeit;
+	}
+
+	public long getStartzeit() {
+		return startzeit;
+	}
+
+	public void setStartzeit(long startzeit) { this.startzeit = startzeit; }
+
+	public long getEndzeit() {
+		return endzeit;
+	}
+
+	public void setEndzeit(long endzeit) {
+		this.endzeit = endzeit;
 	}
 
 	public long getDurchlaufzeit() {
@@ -31,29 +55,12 @@ public class CamundaObject implements Serializable{
 		this.durchlaufzeit = durchlaufzeit;
 	}
 
-	public long getFinaleBearbeitungszeit() {
-		return finaleBearbeitungszeit;
-	}
-
-	public void setFinaleBearbeitungszeit(long finaleBearbeitungszeit) {
-		this.finaleBearbeitungszeit = finaleBearbeitungszeit;
-	}
-
-	public long getEndeBearbeitungszeit() {
-		return endeBearbeitungszeit;
-	}
-
-	public void setEndeBearbeitungszeit(long endeBearbeitungszeit) {
-		this.endeBearbeitungszeit = endeBearbeitungszeit;
-	}
-
 	@Override
 	public String toString() {
-		return "CamundaObject [durchlaufzeit=" + durchlaufzeit + ", finaleBearbeitungszeit=" + finaleBearbeitungszeit
-				+ ", endeBearbeitungszeit=" + endeBearbeitungszeit + "]";
+		return "CamundaObject{" +
+				"startzeit=" + startzeit +
+				", endzeit=" + endzeit +
+				", durchlaufzeit=" + durchlaufzeit +
+				'}';
 	}
-
-	
-	
-	
 }
