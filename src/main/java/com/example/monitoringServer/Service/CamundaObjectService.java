@@ -22,8 +22,6 @@ public class CamundaObjectService {
 	private CamundaObjectRepository camundaObjectRepository;
 
 	private final Logger log = LoggerFactory.getLogger(CamundaObjectService.class);
-	private final String url = "http://localhost:8085";
-	RestTemplate restTemplate = new RestTemplate();
 	private List<CamundaObject> camundaObjects = new ArrayList<>();
 
 	//Liste von unten hier zurückgeben

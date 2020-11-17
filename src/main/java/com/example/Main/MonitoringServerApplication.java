@@ -1,4 +1,4 @@
-package com.example.monitoringServer;
+package com.example.Main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
