@@ -1,10 +1,51 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Darstellung der Bearbeitungszeit</title>
-<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css} "/>
+    <title>Darstellung der Bearbeitungszeit</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css} "/>
+    <style>
 
+        .stats-list {
+            list-style-type: none;
+            clear: left;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-list .stats-list-positive {
+            color: #3adb76;
+        }
+
+        .stats-list .stats-list-negative {
+            color: #cc4b37;
+        }
+
+        .stats-list > li {
+            display: inline-block;
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: 1px solid #cacaca;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .stats-list > li:last-child {
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .stats-list > li .stats-list-label {
+            display: block;
+            margin-top: 2px;
+            font-size: 0.9em;
+            font-weight: normal;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div class="jumbotron jumbotron-fluid bg-dark text-white">
@@ -13,29 +54,47 @@
         <p class="lead">Die Daten wurden vom ExternalTaskClient geschickt.</p>
     </div>
 </div>
-<div class="container p-3 my-3 bg-dark text-white">
-<table class="table table-dark">
+<div class="container">
 
-    <thead>
+    <ul class="stats-list">
+        <li class="stats-list-positive">
+            <span th:utext="${minObject}">135 s</span> s<span class="stats-list-label">Kürzeste Laufzeit</span>
+        </li>
+        <li class="stats-list-negative">
+            <span th:utext="${maxObject}">135 </span> s<span class="stats-list-label">Längste Laufzeit</span>
+        </li>
+        <li>
+            <span th:utext="${#numbers.formatDecimal(averageObject_s, 0, 'COMMA', 2, 'POINT')}">135</span> s<span
+                class="stats-list-label">Durchschnittliche Laufzeit</span>
+        </li>
+        <li>
+            <span th:utext="${amountObjects}">135</span> <span class="stats-list-label">Anzahl Einträge</span>
+        </li>
+    </ul>
+</div>
+<div class="container p-3 my-3 text-white">
+    <table class="table">
 
-    <tr>
-        <th scope="col"> Startzeit </th>
-        <th scope="col"> Endzeit </th>
-        <th scope="col"> Durchlaufzeit </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${tolle_liste.empty}">
-        <td colspan="2"> No Objects Available </td>
-    </tr>
-<tr th:each="camunda_entry : ${tolle_liste}">
-
-    <td><span th:text="${camunda_entry.startzeit}">Startzeit</span></td>
-    <td><span th:text="${camunda_entry.endzeit}">endzeit</span></td>
-    <td><span th:text="${camunda_entry.durchlaufzeit}">Durchlaufzeit</span></td>
-</tr>
-</tbody>
-</table>
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Startzeit</th>
+            <th scope="col"> Endzeit</th>
+            <th scope="col"> Durchlaufzeit in Sekunden</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${tolle_liste.empty}">
+            <td colspan="2"> No Objects Available</td>
+        </tr>
+        <tr th:each="camunda_entry : ${tolle_liste}">
+            <td th:text="${#dates.format(camunda_entry.startzeit * 1000, 'dd-MM-yyyy HH:mm:ss')}">date</td>
+            <td th:text="${#dates.format(camunda_entry.endzeit * 1000, 'dd-MM-yyyy HH:mm:ss')}">date</td>
+            <td th:if="${camunda_entry.durchlaufzeit_ms le 1000}"><span th:text="${camunda_entry.durchlaufzeit_ms}">Durchlaufzeit in Millisek</span> ms</td>
+            <td  th:if="${camunda_entry.durchlaufzeit_ms gt 1000}"><span
+                    th:text="${camunda_entry.durchlaufzeit_sec}">Durchlaufzeit in Sekunden</span> s</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
