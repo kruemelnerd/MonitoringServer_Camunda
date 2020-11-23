@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Darstellung der Bearbeitungszeit</title>
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.3/css/bootstrap.min.css} "/>
+
+</head>
+<body>
+<div class="jumbotron jumbotron-fluid bg-dark text-white">
+    <div class="container">
+        <h1 class="display-4">Darstellung der Bearbeitungszeit</h1>
+        <p class="lead">Die Daten wurden vom ExternalTaskClient geschickt.</p>
+    </div>
+</div>
+
+<div class="container p-3 my-3 bg-dark text-white">
+<form action="#" th:action="@{camundaObject/}" th:object="${camundaObjectsList}" modelAttribute="camundaObject" method="post">
+    Startzeit: <input type="text" >
+    Endzeit: <input type="text" >
+    Durchlaufzeit: <input type="text" >
+    <button class="btn btn-success" type="submit">hinzufügen</button>
+</form>
+
+<table class="table table-dark">
+    <thead>
+    <tr>
+        <th scope="col"> Startzeit </th>
+        <th scope="col"> Endzeit </th>
+        <th scope="col"> Durchlaufzeit </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${camundaObjectsList.isEmpty()}">
+        <td colspan="2" class="text-info bg-green"> Die CamundaObject Liste ist momentan leer! </td>
+    </tr>
+<tr th:each="camunda_entry : ${camundaObjectsList}">
+
+    <td><span th:text="${camunda_entry.startzeit}">Startzeit</span></td>
+    <td><span th:text="${camunda_entry.endzeit}">endzeit</span></td>
+    <td><span th:text="${camunda_entry.durchlaufzeit}">Durchlaufzeit</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>
+
+
+

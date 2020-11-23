@@ -20,7 +20,7 @@ import static com.example.monitoringServer.Model.CamundaObject.CamundaObjectBuil
 import static java.util.Comparator.comparingLong;
 
 @Controller
-//@RequestMapping("/camundaObject")
+@RequestMapping("/camundaObject")
 public class MonitoringServerController {
 
     private static final Logger logger = LoggerFactory.getLogger(MonitoringServerController.class);
@@ -31,6 +31,7 @@ public class MonitoringServerController {
     // nichts senden
     @GetMapping("/")
     public String getCamundaObject(Model model) {
+
         List<CamundaObject> completeList = camundaObjectService.getCamundaObjectsList();
         model.addAttribute("tolle_liste", completeList);
         CamundaObject max = completeList.stream().max(comparingLong(CamundaObject::getDurchlaufzeit_nano)).orElse(aCamundaObject().build());
@@ -43,7 +44,6 @@ public class MonitoringServerController {
         model.addAttribute("amountObjects", completeList.size());
         logger.info("gibt die Liste von CamundaObjects zurück");
         return "CamundaObjectList";
-
     }
 
     @GetMapping("/greeting")
@@ -58,6 +58,7 @@ public class MonitoringServerController {
     public void createCamundaObject(@RequestBody CamundaObject camundaObject) {
         logger.info(camundaObject.toString());
         camundaObjectService.saveCamundaObject(camundaObject);
+
     }
 }
 
